@@ -1,0 +1,78 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Firebase
+</title>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/1F835700-E44B-4045-AC7B-56488757CE8A/main.js" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/9A6C3CCA-97EC-F64E-B8A7-B7C31C79BC16/abn/main.css"/><style media="screen">
+body{
+display: flex;
+min-height: 100vh;
+width: 100%
+padding: 0;
+margin: 0;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+}
+#uploader{
+-webkit-appearance: none;
+appearance: none;
+width: 50%;
+margin-bottom: 10px;
+}
+
+</style>
+<body>
+<progress value="0" max="100" id="uploader">0%</progress>
+<input type="file" value ="upload" id="fileButton"/>
+
+<script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC-cFIwC3L6Cz95UTDyJsgfeoKhdiNukBo",
+    authDomain: "audios-6a8cc.firebaseapp.com",
+    databaseURL: "https://audios-6a8cc.firebaseio.com",
+    projectId: "audios-6a8cc",
+    storageBucket: "audios-6a8cc.appspot.com",
+    messagingSenderId: "279488775506"
+  };
+  firebase.initializeApp(config);
+
+var uploader=document.getElementById('uploader');
+var fileButton=document.getElementById('fileButton');
+
+
+fileButton.addEventListener('change',function(e){
+
+var file=e.target.files[0];
+var storageRef= firebase.storage().ref('audios/'+ file.name);
+var task =storageRef.put(file);
+
+task.on('state_changed' ,
+		
+	function progress(snapshot) {
+	var percentage = (snapshot.bytesTransferred /snapshot.totalBytes)*100;
+	uploader.value=percentage;
+	
+	},
+
+	function error(err){
+
+	},
+
+	function complete(){
+
+	}
+
+
+	);
+});
+
+
+
+</script>
+
+<a href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://firebasestorage.googleapis.com/v0/b/audios-6a8cc.appspot.com/o/audios%2Faudi.wma?alt=media&token=673e5c20-1ae9-4370-a171-71153eeddecd" > get qr </a>
+</body>
+</html>
